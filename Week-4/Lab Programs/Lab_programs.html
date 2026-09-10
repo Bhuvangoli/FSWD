@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Week - 4 Lab Programs</title>
+</head>
+
+<body>
+
+<h1>Week - 4 Lab Programs</h1>
+
+<!-- PROGRAM 1 -->
+<h2>1. Multiplication Table</h2>
+
+<pre>
+function multiplicationTable(n) {
+    let output = "";
+
+    for (let i = 1; i <= 10; i++) {
+        output += n + " x " + i + " = " + (n * i) + "\n";
+    }
+
+    return output;
+}
+</pre>
+
+Enter Number:
+<input type="number" id="num1">
+<button onclick="program1()">Run</button>
+
+<pre id="output1"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 2 -->
+<h2>2. Validate a 10-Character Username</h2>
+
+<pre>
+function validateUsername(username) {
+    let pattern = /^[0-9].{8}[A-Za-z]$/;
+
+    if (pattern.test(username)) {
+        return "Valid Username";
+    } else {
+        return "Invalid Username";
+    }
+}
+</pre>
+
+Enter Username:
+<input type="text" id="username">
+<button onclick="program2()">Run</button>
+
+<pre id="output2"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 3 -->
+<h2>3. Move an Image Using Up, Down, Left and Right Buttons</h2>
+
+<pre>
+let image = document.getElementById("image");
+
+let x = 100;
+let y = 100;
+let step = 10;
+
+function moveLeft() {
+    x -= step;
+    image.style.left = x + "px";
+}
+
+function moveRight() {
+    x += step;
+    image.style.left = x + "px";
+}
+
+function moveUp() {
+    y -= step;
+    image.style.top = y + "px";
+}
+
+function moveDown() {
+    y += step;
+    image.style.top = y + "px";
+}
+</pre>
+
+<button onclick="moveUp()">Up</button>
+<br>
+<button onclick="moveLeft()">Left</button>
+<button onclick="moveRight()">Right</button>
+<br>
+<button onclick="moveDown()">Down</button>
+
+<br><br>
+
+<img id="image" src="image.jpg"
+     style="position:absolute; left:180px; top:500px; width:125px;">
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<pre>
+Output:
+The image moves in the selected direction.
+</pre>
+
+<hr>
+
+
+<!-- PROGRAM 4 -->
+<h2>4. Reverse Each Word in a String</h2>
+
+<pre>
+function reverseWords(str) {
+    let words = str.split(" ");
+
+    let result = words.map(function(word) {
+        return word.split("").reverse().join("");
+    });
+
+    return result.join(" ");
+}
+</pre>
+
+Enter String:
+<input type="text" id="string4" value="hello world javascript">
+<button onclick="program4()">Run</button>
+
+<pre id="output4"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 5 -->
+<h2>5. Find Second Smallest and Second Largest Numbers</h2>
+
+<pre>
+function secondSmallestLargest(arr) {
+    let unique = [...new Set(arr)];
+
+    unique.sort(function(a, b) {
+        return a - b;
+    });
+
+    let secondSmallest = unique[1];
+    let secondLargest = unique[unique.length - 2];
+
+    return "Second Smallest: " + secondSmallest +
+           "\nSecond Largest: " + secondLargest;
+}
+</pre>
+
+Enter Numbers separated by commas:
+<input type="text" id="array5" value="10,5,8,20,15">
+<button onclick="program5()">Run</button>
+
+<pre id="output5"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 6 -->
+<h2>6. Count Occurrences of Each Letter</h2>
+
+<pre>
+function countLetters(str) {
+    let count = {};
+
+    for (let char of str) {
+        if (count[char]) {
+            count[char]++;
+        } else {
+            count[char] = 1;
+        }
+    }
+
+    let output = "";
+
+    for (let char in count) {
+        output += char + ":" + count[char] + ", ";
+    }
+
+    return output;
+}
+</pre>
+
+Enter Word:
+<input type="text" id="string6" value="programming">
+<button onclick="program6()">Run</button>
+
+<pre id="output6"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 7 -->
+<h2>7. Generate All Possible Substrings</h2>
+
+<pre>
+function substrings(str) {
+    let result = [];
+
+    for (let i = 0; i < str.length; i++) {
+        for (let j = i + 1; j <= str.length; j++) {
+            result.push(str.substring(i, j));
+        }
+    }
+
+    return result;
+}
+</pre>
+
+Enter String:
+<input type="text" id="string7" value="hello">
+<button onclick="program7()">Run</button>
+
+<pre id="output7"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 8 -->
+<h2>8. Find the First Non-Repeated Character</h2>
+
+<pre>
+function firstNonRepeated(str) {
+    let count = {};
+
+    for (let char of str) {
+        if (count[char]) {
+            count[char]++;
+        } else {
+            count[char] = 1;
+        }
+    }
+
+    for (let char of str) {
+        if (count[char] === 1) {
+            return char;
+        }
+    }
+
+    return "No non-repeated character";
+}
+</pre>
+
+Enter String:
+<input type="text" id="string8" value="abacddbec">
+<button onclick="program8()">Run</button>
+
+<pre id="output8"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 9 -->
+<h2>9. Check Password Strength</h2>
+
+<pre>
+function checkPassword(password) {
+    let pattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&*!]).{8,}$/;
+
+    if (pattern.test(password)) {
+        return "Strong Password";
+    } else {
+        return "Not a Strong Password";
+    }
+}
+</pre>
+
+Enter Password:
+<input type="text" id="password9" value="Hello@123">
+<button onclick="program9()">Run</button>
+
+<pre id="output9"></pre>
+
+<hr>
+
+
+<!-- PROGRAM 10 -->
+<h2>10. Remove Duplicate Characters</h2>
+
+<pre>
+function removeDuplicates(str) {
+    let result = "";
+
+    for (let char of str) {
+        if (!result.includes(char)) {
+            result += char;
+        }
+    }
+
+    return result;
+}
+</pre>
+
+Enter String:
+<input type="text" id="string10" value="programming">
+<button onclick="program10()">Run</button>
+
+<pre id="output10"></pre>
+
+
+<script>
+
+/* PROGRAM 1 */
+function program1() {
+    let n = Number(document.getElementById("num1").value);
+    let output = "";
+
+    for (let i = 1; i <= 10; i++) {
+        output += n + " x " + i + " = " + (n * i) + "\n";
+    }
+
+    document.getElementById("output1").textContent = output;
+}
+
+
+/* PROGRAM 2 */
+function program2() {
+    let username = document.getElementById("username").value;
+
+    let pattern = /^[0-9].{8}[A-Za-z]$/;
+
+    if (pattern.test(username)) {
+        document.getElementById("output2").textContent =
+            "Valid Username";
+    } else {
+        document.getElementById("output2").textContent =
+            "Invalid Username";
+    }
+}
+
+
+/* PROGRAM 3 */
+let image = document.getElementById("image");
+
+let x = 180;
+let y = 500;
+let step = 10;
+
+function moveLeft() {
+    x -= step;
+    image.style.left = x + "px";
+}
+
+function moveRight() {
+    x += step;
+    image.style.left = x + "px";
+}
+
+function moveUp() {
+    y -= step;
+    image.style.top = y + "px";
+}
+
+function moveDown() {
+    y += step;
+    image.style.top = y + "px";
+}
+
+
+/* PROGRAM 4 */
+function program4() {
+    let str = document.getElementById("string4").value;
+
+    let words = str.split(" ");
+
+    let result = words.map(function(word) {
+        return word.split("").reverse().join("");
+    });
+
+    document.getElementById("output4").textContent =
+        result.join(" ");
+}
+
+
+/* PROGRAM 5 */
+function program5() {
+    let arr = document.getElementById("array5").value
+        .split(",")
+        .map(Number);
+
+    let unique = [...new Set(arr)];
+
+    unique.sort(function(a, b) {
+        return a - b;
+    });
+
+    let secondSmallest = unique[1];
+    let secondLargest = unique[unique.length - 2];
+
+    document.getElementById("output5").textContent =
+        "Second Smallest: " + secondSmallest +
+        "\nSecond Largest: " + secondLargest;
+}
+
+
+/* PROGRAM 6 */
+function program6() {
+    let str = document.getElementById("string6").value;
+
+    let count = {};
+
+    for (let char of str) {
+        if (count[char]) {
+            count[char]++;
+        } else {
+            count[char] = 1;
+        }
+    }
+
+    let output = "";
+
+    for (let char in count) {
+        output += char + ":" + count[char] + ", ";
+    }
+
+    document.getElementById("output6").textContent = output;
+}
+
+
+/* PROGRAM 7 */
+function program7() {
+    let str = document.getElementById("string7").value;
+
+    let result = [];
+
+    for (let i = 0; i < str.length; i++) {
+        for (let j = i + 1; j <= str.length; j++) {
+            result.push(str.substring(i, j));
+        }
+    }
+
+    document.getElementById("output7").textContent =
+        result.join(", ");
+}
+
+
+/* PROGRAM 8 */
+function program8() {
+    let str = document.getElementById("string8").value;
+
+    let count = {};
+
+    for (let char of str) {
+        if (count[char]) {
+            count[char]++;
+        } else {
+            count[char] = 1;
+        }
+    }
+
+    for (let char of str) {
+        if (count[char] === 1) {
+            document.getElementById("output8").textContent = char;
+            return;
+        }
+    }
+
+    document.getElementById("output8").textContent =
+        "No non-repeated character";
+}
+
+
+/* PROGRAM 9 */
+function program9() {
+    let password = document.getElementById("password9").value;
+
+    let pattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&*!]).{8,}$/;
+
+    if (pattern.test(password)) {
+        document.getElementById("output9").textContent =
+            "Strong Password";
+    } else {
+        document.getElementById("output9").textContent =
+            "Not a Strong Password";
+    }
+}
+
+
+/* PROGRAM 10 */
+function program10() {
+    let str = document.getElementById("string10").value;
+
+    let result = "";
+
+    for (let char of str) {
+        if (!result.includes(char)) {
+            result += char;
+        }
+    }
+
+    document.getElementById("output10").textContent = result;
+}
+
+</script>
+
+</body>
+</html>

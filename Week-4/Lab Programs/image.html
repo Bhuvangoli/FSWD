@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Move Image</title>
+
+    <style>
+        #image {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 100px;
+        }
+
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="image" src="image.jpg">
+
+    <br><br>
+
+    <button onclick="moveUp()">Up</button>
+    <br>
+    <button onclick="moveLeft()">Left</button>
+    <button onclick="moveRight()">Right</button>
+    <br>
+    <button onclick="moveDown()">Down</button>
+
+    <script>
+        let image = document.getElementById("image");
+
+        let x = 100;
+        let y = 100;
+        let step = 10;
+
+        function moveLeft() {
+            x -= step;
+            image.style.left = x + "px";
+        }
+
+        function moveRight() {
+            x += step;
+            image.style.left = x + "px";
+        }
+
+        function moveUp() {
+            y -= step;
+            image.style.top = y + "px";
+        }
+
+        function moveDown() {
+            y += step;
+            image.style.top = y + "px";
+        }
+    </script>
+
+</body>
+</html>

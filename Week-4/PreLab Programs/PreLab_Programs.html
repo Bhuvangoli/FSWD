@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Lab Programs</title>
+</head>
+
+<body>
+
+<h1>PreLab Programs</h1>
+
+
+<!-- PROGRAM 1 -->
+
+<h2>1. Fibonacci Series up to n Terms</h2>
+
+<h3>JavaScript Code:</h3>
+
+<pre>
+let n = 10;
+
+let a = 0;
+let b = 1;
+
+console.log("Fibonacci Series:");
+
+for (let i = 1; i <= n; i++) {
+    console.log(a);
+
+    let next = a + b;
+    a = b;
+    b = next;
+}
+</pre>
+
+<h3>Output:</h3>
+
+<pre>
+Fibonacci Series:
+0 1 1 2 3 5 8 13 21 34
+</pre>
+
+
+<!-- PROGRAM 2 -->
+
+<h2>2. Detect Whether Cookies are Enabled</h2>
+
+<h3>JavaScript Code:</h3>
+
+<pre>
+if (navigator.cookieEnabled) {
+    document.write("Cookies are enabled");
+} else {
+    document.write("Cookies are disabled");
+}
+</pre>
+
+<h3>Output:</h3>
+
+<pre>
+Cookies are enabled
+</pre>
+
+
+<!-- PROGRAM 3 -->
+
+<h2>3. Validate a Password</h2>
+
+<h3>JavaScript Code:</h3>
+
+<pre>
+function validatePassword(password) {
+
+    let pattern = /^[A-Z](?=.*[0-9]).{7,}$/;
+
+    if (pattern.test(password)) {
+        console.log("Valid Password");
+    } else {
+        console.log("Invalid Password");
+    }
+}
+
+validatePassword("Password123");
+</pre>
+
+<h3>Output:</h3>
+
+<pre>
+Valid Password
+</pre>
+
+
+<!-- PROGRAM 4 -->
+
+<h2>4. Display Student Names using Arrow Function and Template Literals</h2>
+
+<h3>JavaScript Code:</h3>
+
+<pre>
+let students = ["Rahul", "Priya", "Arun", "Sneha"];
+
+let displayStudents = () => {
+    students.forEach((name, index) => {
+        console.log(`${index + 1}. ${name}`);
+    });
+};
+
+displayStudents();
+</pre>
+
+<h3>Output:</h3>
+
+<pre>
+Student Name: Rahul
+Student Name: Priya
+Student Name: Arun
+Student Name: Sneha
+</pre>
+</body>
+</html>
