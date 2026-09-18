@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Traffic Light System</title>
+
+    <style>
+        #light {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: gray;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Traffic Light System</h2>
+
+<div id="light"></div>
+
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+
+<p id="message">Traffic light stopped.</p>
+
+<script>
+
+const light = document.getElementById("light");
+const message = document.getElementById("message");
+
+let running = false;
+let timer;
+
+// Function to change the light
+function changeLight(color, next) {
+
+    if (!running) {
+        return;
+    }
+
+    light.style.backgroundColor = color;
+    message.innerHTML = "Current Light: " + color;
+
+    timer = setTimeout(next, 2000);
+}
+
+// Callback functions
+function red() {
+    changeLight("red", green);
+}
+
+function green() {
+    changeLight("green", yellow);
+}
+
+function yellow() {
+    changeLight("yellow", red);
+}
+
+// Start button
+document.getElementById("start").addEventListener("click", () => {
+
+    if (!running) {
+        running = true;
+        message.innerHTML = "Traffic light started.";
+        red();
+    }
+
+});
+
+// Stop button
+document.getElementById("stop").addEventListener("click", () => {
+
+    running = false;
+    clearTimeout(timer);
+
+    light.style.backgroundColor = "gray";
+    message.innerHTML = "Traffic light stopped.";
+
+});
+
+</script>
+
+</body>
+</html>

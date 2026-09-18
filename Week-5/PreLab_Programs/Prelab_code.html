@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prelab Programs - Week 5</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 15px;
+        }
+
+        h1 {
+            color: black;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        pre {
+            background-color: white;
+            color: black;
+            padding: 15px;
+            white-space: pre-wrap;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 15px;
+        }
+
+        .visual-output {
+            border: 1px solid #ccc;
+            padding: 20px 10px;
+            min-height: 130px;
+            box-sizing: border-box;
+            background-color: lightblue;
+        }
+
+        .visual-output h3 {
+            margin: 0 0 25px 0;
+            font-family: Georgia, serif;
+            font-size: 24px;
+        }
+
+        .visual-output button {
+            font-size: 16px;
+            padding: 3px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prelab Programs</h1>
+
+    <h2>1. Square and Cube of Number</h2>
+
+    <h3>Code:</h3>
+    <pre>const square = (n) =&gt; n * n;
+
+const cube = (n) =&gt; n * n * n;
+
+let num = 5;
+
+console.log("Number:", num);
+
+console.log("Square:", square(num));
+
+console.log("Cube:", cube(num));</pre>
+
+    <h3>Output:</h3>
+    <div class="output">Number: 5
+Square: 25
+Cube: 125</div>
+
+
+    <h2>2. Add Two Numbers Using Callback</h2>
+
+    <h3>Code:</h3>
+    <pre>function add(a, b, callback) {
+
+    let result = a + b;
+
+    callback(result);
+
+}
+
+function display(result) {
+
+    console.log("Sum:", result);
+
+}
+
+add(10, 20, display);</pre>
+
+    <h3>Output:</h3>
+    <div class="output">Sum: 30</div>
+
+
+    <h2>3. Promise Resolving</h2>
+
+    <h3>Code:</h3>
+    <pre>
+
+function checkNumber(num) {
+
+    return new Promise((resolve, reject) {
+
+        if (num &lt; 0) {
+
+            reject("Number is negative!");
+
+        } else {
+
+            setTimeout(() =&gt; {
+
+                resolve("Success! Number is valid.");
+
+            }, 2000);
+
+        }
+
+    });
+
+}
+
+checkNumber(10)
+
+    .then((message) =&gt; {
+
+        console.log(message);
+
+    })
+
+    .catch((error) =&gt; {
+
+        console.log(error);
+
+    });</pre>
+
+    <h3>Output:</h3>
+    <div class="output">Success! Number is valid.</div>
+
+
+    <h2>4. Async/Await</h2>
+
+    <h3>Code:</h3>
+    <pre>
+
+function fetchData() {
+    return new Promise((resolve) =&gt; {
+        setTimeout(() =&gt; {
+            resolve("Data fetched successfully!");
+        }, 3000);
+    });
+}
+
+async function getData() {
+    console.log("Fetching data...");
+
+    const data = await fetchData();
+
+    console.log(data);
+}
+
+getData();</pre>
+
+    <h3>Output:</h3>
+    <div class="output">Fetching data...
+Data fetched successfully!</div>
+
+
+    <h2>5. Email Address Validation</h2>
+
+    <h3>Code:</h3>
+    <pre>function validateEmail(email) {
+
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (pattern.test(email)) {
+
+        console.log("Valid email address");
+
+    } else {
+
+        console.log("Invalid email address");
+
+    }
+
+}
+
+let email = "student@gmail.com";
+
+validateEmail(email);</pre>
+
+    <h3>Output:</h3>
+    <div class="output">Valid email address</div>
+
+
+    <h2>6. Changing Background Colour</h2>
+
+    <h3>Code:</h3>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Background Color Change&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h2&gt;Change Background Color&lt;/h2&gt;
+
+    &lt;button id="colorButton"&gt;Change Color&lt;/button&gt;
+
+    &lt;script&gt;
+        const button = document.getElementById("colorButton");
+
+        button.addEventListener("click", function() {
+            document.body.style.backgroundColor = "lightblue";
+        });
+    &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+    <h3>Output:</h3>
+    <div class="visual-output">
+        <h3>Change Background Color</h3>
+        <button id="demoButton">Change Color</button>
+    </div>
+
+    <script>
+        document.getElementById("demoButton").addEventListener("click", function () {
+            document.querySelector(".visual-output").style.backgroundColor = "lightblue";
+        });
+    </script>
+
+</body>
+</html>

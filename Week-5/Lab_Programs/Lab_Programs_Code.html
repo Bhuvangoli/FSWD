@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lab Programs</title>
+<style>
+body{background:white;color:black;font-family:Arial,sans-serif;margin:20px}
+h1,h2,h3{color:black}
+pre,.output{background:white;color:black;padding:12px;font-family:Consolas,"Courier New",monospace;font-size:14px;white-space:pre-wrap}
+.output{margin-bottom:30px}
+.demo{padding:10px;background:white;color:black}
+.demo img{width:250px;height:250px;object-fit:cover}
+#trafficLight{width:100px;height:100px;border-radius:50%;background:yellow;margin:20px}
+.demo button{padding:10px 20px;margin:5px}
+</style>
+</head>
+<body>
+
+<h1>Lab Programs</h1>
+
+<h2>1. Mobile Number Validation</h2>
+<h3>Code:</h3>
+<pre>const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+rl.question("Enter your mobile number: ", (mobile) => {
+
+    let pattern = /^[6-9][0-9]{9}$/;
+
+    if (pattern.test(mobile)) {
+        console.log("Valid mobile number");
+    } else {
+        console.log("Invalid mobile number");
+    }
+
+    rl.close();
+});</pre>
+<h3>Output:</h3>
+<div class="output">Enter your mobile number: 9876543210
+Valid mobile number</div>
+
+<h2>2. Arithmetic Operations</h2>
+<h3>Code:</h3>
+<pre>const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function calculate(a, b, operator, callback) {
+    let result;
+
+    if (operator === "+") {
+        result = a + b;
+    }
+    else if (operator === "-") {
+        result = a - b;
+    }
+    else if (operator === "*") {
+        result = a * b;
+    }
+    else if (operator === "/") {
+        if (b === 0) {
+            result = "Cannot divide by zero";
+        } else {
+            result = a / b;
+        }
+    }
+    else {
+        result = "Invalid operator";
+    }
+
+    callback(result);
+}
+
+function display(result) {
+    console.log("Result:", result);
+}
+
+rl.question("Enter first number: ", (input1) => {
+    rl.question("Enter second number: ", (input2) => {
+        rl.question("Enter operator (+, -, *, /): ", (operator) => {
+            let a = Number(input1);
+            let b = Number(input2);
+            calculate(a, b, operator, display);
+            rl.close();
+        });
+    });
+});</pre>
+<h3>Output:</h3>
+<div class="output">Enter first number: 1
+Enter second number: 2
+Enter operator (+, -, *, /): *
+Result: 2</div>
+
+<h2>3. Order Tracking</h2>
+<h3>Code:</h3>
+<pre>function orderPlaced() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Placed");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+function orderShipped() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Shipped");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+function orderDelivered() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Delivered");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+async function trackOrder() {
+
+    await orderPlaced();
+
+    await orderShipped();
+
+    await orderDelivered();
+
+}
+
+trackOrder();</pre>
+<h3>Output:</h3>
+<div class="output">Order Placed
+Order Shipped
+Order Delivered</div>
+
+<h2>4. Async/Await</h2>
+<h3>Code:</h3>
+<pre>function orderPlaced() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Placed");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+function orderShipped() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Shipped");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+function orderDelivered() {
+
+    return new Promise((resolve) => {
+
+        setTimeout(() => {
+
+            console.log("Order Delivered");
+
+            resolve();
+
+        }, 1000);
+
+    });
+
+}
+
+orderPlaced()
+
+    .then(() => orderShipped())
+
+    .then(() => orderDelivered());</pre>
+<h3>Output:</h3>
+<div class="output">Order Placed
+Order Shipped
+Order Delivered</div>
+
+<h2>5. Mouse Event</h2>
+<h3>Code:</h3>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Image Events&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h2&gt;Image Event Demonstration&lt;/h2&gt;
+
+&lt;img id="myImage"
+     src="https://themoodguide.com/wp-content/uploads/2022/11/cute-astronalt-wallpaper-for-iphone.jpg"
+     width="200"
+     height="200"&gt;
+
+&lt;p id="message"&gt;Perform an action on the image.&lt;/p&gt;
+
+&lt;script&gt;
+
+const image = document.getElementById("myImage");
+const message = document.getElementById("message");
+
+image.addEventListener("mouseover", () =&gt; {
+    message.innerHTML = "Mouse is over the image.";
+});
+
+image.addEventListener("mouseout", () =&gt; {
+    message.innerHTML = "Mouse moved out of the image.";
+});
+
+image.addEventListener("click", () =&gt; {
+    message.innerHTML = "Image was clicked.";
+});
+
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<h3>Output:</h3>
+<div class="demo">
+<h2>Image Event Demonstration</h2>
+<img id="myImage" src="https://themoodguide.com/wp-content/uploads/2022/11/cute-astronalt-wallpaper-for-iphone.jpg" alt="Image Event Demonstration">
+<p id="imageMessage">Mouse is over the image.</p>
+</div>
+
+<h2>6. Arrow Function</h2>
+<h3>Code:</h3>
+<pre>const students = [
+
+    { name: "A", marks: 35 },
+
+    { name: "B", marks: 78 },
+
+    { name: "C", marks: 42 },
+
+    { name: "D", marks: 90 }
+
+];
+
+const marks = students.map(student =&gt; student.marks);
+
+const total = marks.reduce((sum, mark) =&gt; sum + mark, 0);
+
+const average = total / students.length;
+
+const passedStudents = students.filter(student =&gt; student.marks &gt;= 40);
+
+console.log("Marks:", marks);
+
+console.log("Class Average:", average);
+
+console.log("Passed Students:");
+
+passedStudents.forEach(student =&gt; {
+
+    console.log(student.name + " - " + student.marks);
+
+});</pre>
+<h3>Output:</h3>
+<div class="output">Marks: [ 35, 78, 42, 90 ]
+Class Average: 61.25
+Passed Students:
+B - 78
+C - 42
+D - 90</div>
+
+<h2>7. Traffic Lights</h2>
+<h3>Code:</h3>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Traffic Light System&lt;/title&gt;
+
+    &lt;style&gt;
+        #light {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: gray;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h2&gt;Traffic Light System&lt;/h2&gt;
+
+&lt;div id="light"&gt;&lt;/div&gt;
+
+&lt;button id="start"&gt;Start&lt;/button&gt;
+&lt;button id="stop"&gt;Stop&lt;/button&gt;
+
+&lt;p id="message"&gt;Traffic light stopped.&lt;/p&gt;
+
+&lt;script&gt;
+
+const light = document.getElementById("light");
+const message = document.getElementById("message");
+
+let running = false;
+let timer;
+
+function changeLight(color, next) {
+
+    if (!running) {
+        return;
+    }
+
+    light.style.backgroundColor = color;
+    message.innerHTML = "Current Light: " + color;
+
+    timer = setTimeout(next, 2000);
+}
+
+function red() {
+    changeLight("red", green);
+}
+
+function green() {
+    changeLight("green", yellow);
+}
+
+function yellow() {
+    changeLight("yellow", red);
+}
+
+document.getElementById("start").addEventListener("click", () =&gt; {
+
+    if (!running) {
+        running = true;
+        message.innerHTML = "Traffic light started.";
+        red();
+    }
+
+});
+
+document.getElementById("stop").addEventListener("click", () =&gt; {
+
+    running = false;
+    clearTimeout(timer);
+
+    light.style.backgroundColor = "gray";
+    message.innerHTML = "Traffic light stopped.";
+
+});
+
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<h3>Output:</h3>
+<div class="demo">
+<h2>Traffic Light System</h2>
+<div id="trafficLight"></div>
+<button id="startLight">Start</button>
+<button id="stopLight">Stop</button>
+<p id="trafficMessage">Current Light: yellow</p>
+</div>
+
+<script>
+const image=document.getElementById("myImage");
+const imageMessage=document.getElementById("imageMessage");
+image.addEventListener("mouseover",()=>imageMessage.innerHTML="Mouse is over the image.");
+image.addEventListener("mouseout",()=>imageMessage.innerHTML="Mouse moved out of the image.");
+image.addEventListener("click",()=>imageMessage.innerHTML="Image was clicked.");
+
+const trafficLight=document.getElementById("trafficLight");
+const trafficMessage=document.getElementById("trafficMessage");
+let running=false,timer;
+
+function changeLight(color,next){
+    if(!running)return;
+    trafficLight.style.backgroundColor=color;
+    trafficMessage.innerHTML="Current Light: "+color;
+    timer=setTimeout(next,2000);
+}
+function red(){changeLight("red",green)}
+function green(){changeLight("green",yellow)}
+function yellow(){changeLight("yellow",red)}
+
+document.getElementById("startLight").addEventListener("click",()=>{
+    if(!running){running=true;trafficMessage.innerHTML="Traffic light started.";red();}
+});
+document.getElementById("stopLight").addEventListener("click",()=>{
+    running=false;
+    clearTimeout(timer);
+    trafficLight.style.backgroundColor="gray";
+    trafficMessage.innerHTML="Traffic light stopped.";
+});
+</script>
+
+</body>
+</html>

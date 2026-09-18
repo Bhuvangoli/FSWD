@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Events</title>
+</head>
+
+<body>
+
+<h2>Image Event Demonstration</h2>
+
+<img id="myImage"
+     src="https://themoodguide.com/wp-content/uploads/2022/11/cute-astronalt-wallpaper-for-iphone.jpg"
+     width="200"
+     height="200">
+
+<p id="message">Perform an action on the image.</p>
+
+<script>
+
+const image = document.getElementById("myImage");
+const message = document.getElementById("message");
+
+// Mouseover event
+image.addEventListener("mouseover", () => {
+    message.innerHTML = "Mouse is over the image.";
+});
+
+// Mouseout event
+image.addEventListener("mouseout", () => {
+    message.innerHTML = "Mouse moved out of the image.";
+});
+
+// Click event
+image.addEventListener("click", () => {
+    message.innerHTML = "Image was clicked.";
+});
+
+</script>
+
+</body>
+</html>
