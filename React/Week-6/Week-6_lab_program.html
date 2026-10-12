@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Lab Program - Form</title>
+  <style>
+    body {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 18px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin-top: 28px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid #ccc;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+    }
+    .output {
+      border: 1px solid #ccc;
+      padding: 18px;
+      background: #fff;
+      margin-bottom: 28px;
+    }
+    .form-demo {
+      box-sizing: border-box;
+      max-width: 450px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      font-size: 12px;
+    }
+    .form-demo h2 {
+      text-align: center;
+      color: #28a745;
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0 0 18px;
+    }
+    .form-demo .field-label {
+      display: block;
+      text-align: center;
+      margin: 18px 0 8px;
+      font-size: 12px;
+    }
+    .form-demo .text-input,
+    .form-demo select,
+    .form-demo textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 8px 9px;
+      border: 1px solid #d6d6d6;
+      border-radius: 5px;
+      background: #fff;
+      color: #000;
+      font: 11px Arial, sans-serif;
+    }
+    .form-demo fieldset {
+      border: 0;
+      padding: 0;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .form-demo legend {
+      width: 100%;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    .form-demo .inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0 4px;
+      font-size: 12px;
+    }
+    .form-demo textarea { height: 72px; resize: vertical; }
+    .form-demo .file-input {
+      display: block;
+      width: 100%;
+      font-size: 12px;
+    }
+    .form-demo .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .form-demo button {
+      border: 0;
+      border-radius: 4px;
+      background: #28a745;
+      color: #fff;
+      padding: 7px 22px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    hr { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+  </style>
+</head>
+<body>
+  <h1>Lab Program</h1>
+  <section>
+    <h2>1. Form</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function WebContext() {
+  const initialForm = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    contact: '',
+    gender: '',
+    subjects: [],
+    url: '',
+    choice: '',
+    about: ''
+  };
+
+  const [form, setForm] = useState(initialForm);
+  const [resume, setResume] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubject = (e) => {
+    const { value, checked } = e.target;
+    setForm({
+      ...form,
+      subjects: checked
+        ? [...form.subjects, value]
+        : form.subjects.filter((s) => s !== value)
+    });
+  };
+
+  const handleReset = () => {
+    setForm({ ...initialForm });
+    setResume(null);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert('Form submitted successfully!');
+    console.log({ ...form, resume });
+  };
+
+  const styles = {
+    container: {
+      maxWidth: '450px',
+      margin: '20px auto',
+      padding: '20px',
+      fontFamily: 'Arial, sans-serif',
+      color: '#333'
+    },
+    heading: {
+      textAlign: 'center',
+      color: '#28a745',
+      marginBottom: '20px'
+    },
+    label: {
+      display: 'block',
+      marginTop: '18px',
+      marginBottom: '8px',
+      fontSize: '14px'
+    },
+    input: {
+      display: 'block',
+      boxSizing: 'border-box',
+      width: '100%',
+      padding: '10px',
+      border: '2px solid #ddd',
+      borderRadius: '5px',
+      fontSize: '13px',
+      background: 'white'
+    },
+    fieldset: {
+      border: 'none',
+      padding: 0,
+      margin: '24px 0'
+    },
+    inline: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '7px',
+      marginRight: '12px',
+      fontSize: '14px'
+    },
+    textarea: {
+      display: 'block',
+      boxSizing: 'border-box',
+      width: '100%',
+      height: '85px',
+      padding: '10px',
+      border: '2px solid #ddd',
+      borderRadius: '5px',
+      resize: 'vertical'
+    },
+    buttons: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '10px',
+      marginTop: '25px'
+    },
+    button: {
+      background: '#28a745',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      padding: '9px 25px',
+      cursor: 'pointer',
+      fontSize: '14px'
+    }
+  };
+
+  return (
+    &lt;div style={styles.container}>
+      &lt;h2 style={styles.heading}>Form in React&lt;/h2>
+      &lt;form onSubmit={handleSubmit} onReset={handleReset}>
+        &lt;label style={styles.label}>First Name*&lt;/label>
+        &lt;input style={styles.input} type="text" name="firstName"
+          placeholder="Enter First Name" value={form.firstName}
+          onChange={handleChange} required />
+
+        &lt;label style={styles.label}>Last Name*&lt;/label>
+        &lt;input style={styles.input} type="text" name="lastName"
+          placeholder="Enter Last Name" value={form.lastName}
+          onChange={handleChange} required />
+
+        &lt;label style={styles.label}>Enter Email*&lt;/label>
+        &lt;input style={styles.input} type="email" name="email"
+          placeholder="Enter email" value={form.email}
+          onChange={handleChange} required />
+
+        &lt;label style={styles.label}>Contact*&lt;/label>
+        &lt;input style={styles.input} type="tel" name="contact"
+          placeholder="Enter Mobile number" value={form.contact}
+          onChange={handleChange} required />
+
+        &lt;fieldset style={styles.fieldset}>
+          &lt;legend>Gender*&lt;/legend>
+          {['Male', 'Female', 'Other'].map((gender) => (
+            &lt;label style={styles.inline} key={gender}>
+              &lt;input type="radio" name="gender" value={gender}
+                checked={form.gender === gender}
+                onChange={handleChange} required />
+              {gender}
+            &lt;/label>
+          ))}
+        &lt;/fieldset>
+
+        &lt;fieldset style={styles.fieldset}>
+          &lt;legend>Your best Subject*&lt;/legend>
+          {['English', 'Maths', 'Physics'].map((subject) => (
+            &lt;label style={styles.inline} key={subject}>
+              &lt;input type="checkbox" value={subject}
+                checked={form.subjects.includes(subject)}
+                onChange={handleSubject} />
+              {subject}
+            &lt;/label>
+          ))}
+        &lt;/fieldset>
+
+        &lt;label style={styles.label}>Upload Resume*&lt;/label>
+        &lt;input type="file" accept=".pdf,.doc,.docx"
+          onChange={(e) => setResume(e.target.files[0] || null)}
+          required />
+
+        &lt;label style={styles.label}>Enter URL*&lt;/label>
+        &lt;input style={styles.input} type="url" name="url"
+          placeholder="Enter url" value={form.url}
+          onChange={handleChange} required />
+
+        &lt;label style={styles.label}>Select your choice&lt;/label>
+        &lt;select style={styles.input} name="choice" value={form.choice}
+          onChange={handleChange} required>
+          &lt;option value="">Select your Ans&lt;/option>
+          &lt;option value="Student">Student&lt;/option>
+          &lt;option value="Teacher">Teacher&lt;/option>
+          &lt;option value="Professional">Professional&lt;/option>
+        &lt;/select>
+
+        &lt;label style={styles.label}>About*&lt;/label>
+        &lt;textarea style={styles.textarea} name="about"
+          placeholder="About your self" value={form.about}
+          onChange={handleChange} required />
+
+        &lt;div style={styles.buttons}>
+          &lt;button type="reset" style={styles.button}>Reset&lt;/button>
+          &lt;button type="submit" style={styles.button}>Submit&lt;/button>
+        &lt;/div>
+      &lt;/form>
+    &lt;/div>
+  );
+}
+
+export default WebContext;</code></pre>
+
+    <h3>Output</h3>
+    <div class="output">
+      <form class="form-demo" id="demoForm">
+        <h2>Form in React</h2>
+
+        <label class="field-label" for="firstName">First Name*</label>
+        <input class="text-input" id="firstName" name="firstName" type="text" value="Bhuvan" placeholder="Enter First Name" required>
+
+        <label class="field-label" for="lastName">Last Name*</label>
+        <input class="text-input" id="lastName" name="lastName" type="text" value="Sai" placeholder="Enter Last Name" required>
+
+        <label class="field-label" for="email">Enter Email*</label>
+        <input class="text-input" id="email" name="email" type="email" value="abc@gmail.com" placeholder="Enter email" required>
+
+        <label class="field-label" for="contact">Contact*</label>
+        <input class="text-input" id="contact" name="contact" type="tel" value="9876543210" placeholder="Enter Mobile number" required>
+
+        <fieldset>
+          <legend>Gender*</legend>
+          <label class="inline"><input type="radio" name="gender" value="Male" checked required> Male</label>
+          <label class="inline"><input type="radio" name="gender" value="Female"> Female</label>
+          <label class="inline"><input type="radio" name="gender" value="Other"> Other</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Your best Subject*</legend>
+          <label class="inline"><input type="checkbox" name="subjects" value="English" checked> English</label>
+          <label class="inline"><input type="checkbox" name="subjects" value="Maths" checked> Maths</label>
+          <label class="inline"><input type="checkbox" name="subjects" value="Physics" checked> Physics</label>
+        </fieldset>
+
+        <label class="field-label" for="resume">Upload Resume*</label>
+        <input class="file-input" id="resume" name="resume" type="file" accept=".pdf,.doc,.docx" required>
+
+        <label class="field-label" for="url">Enter URL*</label>
+        <input class="text-input" id="url" name="url" type="url" value="https://github.com" placeholder="Enter url" required>
+
+        <label class="field-label" for="choice">Select your choice</label>
+        <select id="choice" name="choice" required>
+          <option value="">Select your Ans</option>
+          <option value="Student" selected>Student</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Professional">Professional</option>
+        </select>
+
+        <label class="field-label" for="about">About*</label>
+        <textarea id="about" name="about" placeholder="About your self" required>Hello</textarea>
+
+        <div class="buttons">
+          <button type="reset">Reset</button>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script>
+    const demoForm = document.getElementById('demoForm');
+    demoForm.addEventListener('reset', () => {
+      setTimeout(() => {
+        // Restore the example values to match the React initial state.
+        // Native reset restores the markup defaults, so fields are reset to the shown example.
+      }, 0);
+    });
+    demoForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      alert('Form submitted successfully!');
+    });
+  </script>
+</body>
+</html>

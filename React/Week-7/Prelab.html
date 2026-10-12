@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Prelab Programs - Product Details and Error Boundary</title>
+  <style>
+    body {
+      max-width: 950px;
+      margin: 24px auto;
+      padding: 0 18px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin-top: 28px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid #ccc;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+    }
+    .output {
+      border: 1px solid #ccc;
+      padding: 18px;
+      background: #fff;
+      margin-bottom: 28px;
+    }
+    .products-output {
+      text-align: center;
+      color: #666;
+      font-size: 22px;
+    }
+    .products-output h1 {
+      margin: 0 0 12px;
+      font-size: clamp(38px, 7vw, 68px);
+      font-weight: 600;
+      letter-spacing: -1.5px;
+      color: #08070d;
+    }
+    .product-item h3 {
+      font-size: 25px;
+      margin: 12px 0 24px;
+      color: #666;
+    }
+    .product-item p {
+      margin: 2px 0;
+      font-size: 22px;
+    }
+    .product-item hr {
+      border: 0;
+      border-top: 1px solid #999;
+      margin: 12px -18px 22px;
+    }
+    .error-output {
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .error-output h1 {
+      margin: 0 0 8px;
+      font-size: clamp(34px, 7vw, 68px);
+      font-weight: 600;
+      letter-spacing: -1.5px;
+      color: #08070d;
+    }
+    .error-output h2 {
+      margin: 0;
+      font-size: clamp(18px, 3vw, 29px);
+      font-weight: 500;
+      color: #000;
+    }
+    hr.section-rule {
+      border: 0;
+      border-top: 1px solid #ddd;
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prelab Programs</h1>
+
+  <section>
+    <h2>1. Product Details</h2>
+
+    <h3>Product.jsx — Code</h3>
+    <pre><code>function Product(props) {
+  return (
+    &lt;div>
+      &lt;h3>Product Name: {props.name}&lt;/h3>
+      &lt;p>Price: ₹{props.price}&lt;/p>
+      &lt;p>Category: {props.category}&lt;/p>
+      &lt;hr />
+    &lt;/div>
+  );
+}
+
+export default Product;</code></pre>
+
+    <h3>App.jsx — Code</h3>
+    <pre><code>import Product from '../Week-7/Prelab_Programs/Product';
+
+function App() {
+  return (
+    &lt;div>
+      &lt;h1>Product Details&lt;/h1>
+
+      &lt;Product
+        name="Laptop"
+        price={55000}
+        category="Electronics"
+      />
+
+      &lt;Product
+        name="Shoes"
+        price={2000}
+        category="Footwear"
+      />
+
+      &lt;Product
+        name="Book"
+        price={500}
+        category="Education"
+      />
+    &lt;/div>
+  );
+}
+
+export default App;</code></pre>
+
+    <h3>Output</h3>
+    <div class="output products-output">
+      <h1>Product Details</h1>
+      <div class="product-item">
+        <h3>Product Name: Laptop</h3>
+        <p>Price: ₹55000</p>
+        <p>Category: Electronics</p>
+        <hr>
+      </div>
+      <div class="product-item">
+        <h3>Product Name: Shoes</h3>
+        <p>Price: ₹2000</p>
+        <p>Category: Footwear</p>
+        <hr>
+      </div>
+      <div class="product-item">
+        <h3>Product Name: Book</h3>
+        <p>Price: ₹500</p>
+        <p>Category: Education</p>
+        <hr>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>2. Error Boundary</h2>
+
+    <h3>ErrorBoundary.jsx — Code</h3>
+    <pre><code>import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    console.error('Error caught:', error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return &lt;h2>Something went wrong. Please try again.&lt;/h2>;
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;</code></pre>
+
+    <h3>Error_Component.jsx — Code</h3>
+    <pre><code>function Error_Component() {
+  throw new Error('Intentional error for testing');
+
+  return &lt;h2>This message will not be displayed.&lt;/h2>;
+}
+
+export default Error_Component;</code></pre>
+
+    <h3>Output</h3>
+    <div class="output error-output">
+      <h1>Error Boundary Example</h1>
+      <h2>Something went wrong. Please try again.</h2>
+    </div>
+  </section>
+</body>
+</html>

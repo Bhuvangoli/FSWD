@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Lab Programs</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      max-width: 1000px;
+      margin: 24px auto;
+      padding: 0 18px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin: 28px 0 12px; }
+    h3 { font-size: 16px; margin: 16px 0 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid #ccc;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+      overflow-x: auto;
+    }
+    .output {
+      border: 1px solid #ccc;
+      padding: 18px;
+      margin-bottom: 30px;
+      text-align: center;
+      background: #fff;
+      color: #000;
+    }
+    .demo h2 { margin: 0 0 12px; font-size: 28px; font-weight: 500; }
+    .demo ul { list-style: none; padding: 0; margin: 22px 0 0; }
+    .demo li { color: #706a7b; font-size: 22px; line-height: 1.5; }
+    .search-demo input[type="text"] {
+      width: 210px; max-width: 100%; padding: 3px 4px; font-size: 16px;
+    }
+    .login-demo input[type="text"],
+    .login-demo input[type="email"],
+    .login-demo input[type="password"] {
+      display: block; width: 212px; max-width: 100%; height: 28px;
+      margin: 16px auto 38px; padding: 3px; font-size: 16px;
+    }
+    .login-demo button, .counter-demo button, .slider-demo button {
+      font-size: 16px; padding: 2px 8px; color: #000;
+    }
+    .login-demo h2 { margin-bottom: 12px; }
+    .login-demo .error { color: red; font-size: 14px; }
+    .counter-demo h3 { color: #706a7b; font-size: 24px; margin: 22px 0 30px; }
+    .counter-demo button { margin: 0 2px; }
+    .slider-demo img { display: block; width: 100%; max-width: 750px; height: 300px; object-fit: cover; margin: 0 auto; }
+    .slider-controls { margin-top: 28px; }
+    .dots { margin-top: 22px; }
+    .slider-demo .dot {
+      width: 18px; height: 18px; padding: 0; margin: 0 4px;
+      border: 1px solid #000; border-radius: 50%; vertical-align: middle;
+      background: #fff; cursor: pointer;
+    }
+    .slider-demo .dot.active { background: #000; }
+    .slider-demo p { color: #706a7b; font-size: 22px; margin: 6px 0 0; }
+    .list-demo ul { margin-top: 20px; }
+    .checklist-demo .option { color: #706a7b; font-size: 22px; line-height: 1.5; }
+    .checklist-demo input { width: 14px; height: 14px; }
+    .checklist-demo h3 { color: #706a7b; font-size: 25px; margin: 24px 0 18px; }
+    .checklist-demo .selected-list { margin-top: 18px; }
+    hr.section-rule { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+  </style>
+</head>
+<body>
+  <h1>Lab Programs</h1>
+
+  <section>
+    <h2>1. Search Filter</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function SearchFilter() {
+  const [search, setSearch] = useState('');
+
+  const items = [
+    'Apple',
+    'Banana',
+    'Orange',
+    'Mango',
+    'Grapes',
+    'Pineapple'
+  ];
+
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    &lt;div>
+      &lt;h2>Search Filter&lt;/h2>
+      &lt;input
+        type="text"
+        placeholder="Search fruits..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      &lt;ul>
+        {filteredItems.map((item) => (
+          &lt;li key={item}>{item}&lt;/li>
+        ))}
+      &lt;/ul>
+      {filteredItems.length === 0 && &lt;p>No items found.&lt;/p>}
+    &lt;/div>
+  );
+}
+
+export default SearchFilter;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo search-demo">
+      <h2>Search Filter</h2>
+      <input id="fruitSearch" type="text" placeholder="Search fruits...">
+      <ul id="fruitList">
+        <li>Apple</li><li>Banana</li><li>Orange</li><li>Mango</li><li>Grapes</li><li>Pineapple</li>
+      </ul>
+      <p id="noFruitMessage" hidden>No items found.</p>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>2. Login Form</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function LoginForm() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const validName = 'Bhuvan';
+  const validEmail = 'bhuvan@gmail.com';
+  const validPassword = '12345';
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (
+      name === validName &&
+      email === validEmail &&
+      password === validPassword
+    ) {
+      setLoggedIn(true);
+      setError('');
+    } else {
+      setError('Invalid name, email, or password.');
+    }
+  }
+
+  if (loggedIn) {
+    return &lt;h2>Welcome, {name}!&lt;/h2>;
+  }
+
+  return (
+    &lt;div>
+      &lt;h2>Login Form&lt;/h2>
+      &lt;form onSubmit={handleSubmit}>
+        &lt;input type="text" placeholder="Enter name" value={name}
+          onChange={(e) => setName(e.target.value)} required />
+        &lt;br />&lt;br />
+        &lt;input type="email" placeholder="Enter email" value={email}
+          onChange={(e) => setEmail(e.target.value)} required />
+        &lt;br />&lt;br />
+        &lt;input type="password" placeholder="Enter password" value={password}
+          onChange={(e) => setPassword(e.target.value)} required />
+        &lt;br />&lt;br />
+        &lt;button type="submit">Login&lt;/button>
+      &lt;/form>
+      {error && &lt;p style={{ color: 'red' }}>{error}&lt;/p>}
+    &lt;/div>
+  );
+}
+
+export default LoginForm;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo login-demo" id="loginDemo">
+      <h2>Login Form</h2>
+      <form id="loginForm">
+        <input id="loginName" type="text" placeholder="Enter name" value="Bhuvan" required>
+        <input id="loginEmail" type="email" placeholder="Enter email" value="abc@gmail.com" required>
+        <input id="loginPassword" type="password" placeholder="Enter password" value="12345" required>
+        <button type="submit">Login</button>
+        <p id="loginError" class="error" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>3. Counter</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div>
+      &lt;h2>Counter&lt;/h2>
+      &lt;h3>Count: {count}&lt;/h3>
+      &lt;button onClick={() => setCount(count + 1)}>Increment&lt;/button>
+      {' '}
+      &lt;button onClick={() => setCount(count - 1)}>Decrement&lt;/button>
+      {' '}
+      &lt;button onClick={() => setCount(0)}>Reset&lt;/button>
+    &lt;/div>
+  );
+}
+
+export default Counter;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo counter-demo">
+      <h2>Counter</h2>
+      <h3>Count: <span id="countValue">3</span></h3>
+      <button type="button" id="incrementBtn">Increment</button>
+      <button type="button" id="decrementBtn">Decrement</button>
+      <button type="button" id="resetBtn">Reset</button>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>4. Image Slider</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function ImageSlider() {
+  const images = [
+    'https://picsum.photos/id/1015/600/300',
+    'https://picsum.photos/id/1016/600/300',
+    'https://picsum.photos/id/1018/600/300',
+    'https://picsum.photos/id/1020/600/300'
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  const previous = () => {
+    setIndex((index - 1 + images.length) % images.length);
+  };
+
+  const next = () => {
+    setIndex((index + 1) % images.length);
+  };
+
+  return (
+    &lt;div style={{ textAlign: 'center' }}>
+      &lt;h2>Image Slider&lt;/h2>
+      &lt;img
+        src={images[index]}
+        alt={`Slide ${index + 1}`}
+        style={{
+          width: '100%',
+          maxWidth: '600px',
+          height: '300px',
+          objectFit: 'cover'
+        }}
+      />
+      &lt;div style={{ marginTop: '15px' }}>
+        &lt;button onClick={previous}>Previous&lt;/button>
+        {' '}
+        &lt;button onClick={next}>Next&lt;/button>
+      &lt;/div>
+      &lt;div style={{ marginTop: '15px' }}>
+        {images.map((image, i) => (
+          &lt;button key={image} onClick={() => setIndex(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            style={{
+              margin: '5px', width: '14px', height: '14px',
+              borderRadius: '50%', border: '1px solid black',
+              backgroundColor: index === i ? 'black' : 'white',
+              cursor: 'pointer'
+            }}
+          />
+        ))}
+      &lt;/div>
+      &lt;p>Image {index + 1} of {images.length}&lt;/p>
+    &lt;/div>
+  );
+}
+
+export default ImageSlider;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo slider-demo">
+      <h2>Image Slider</h2>
+      <img id="sliderImage" src="https://picsum.photos/id/1015/600/300" alt="Slide 1">
+      <div class="slider-controls">
+        <button type="button" id="previousSlide">Previous</button>
+        <button type="button" id="nextSlide">Next</button>
+      </div>
+      <div class="dots" id="sliderDots">
+        <button type="button" class="dot active" aria-label="Go to slide 1"></button>
+        <button type="button" class="dot" aria-label="Go to slide 2"></button>
+        <button type="button" class="dot" aria-label="Go to slide 3"></button>
+        <button type="button" class="dot" aria-label="Go to slide 4"></button>
+      </div>
+      <p id="slideCounter">Image 1 of 4</p>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>5. List Items</h2>
+    <h3>Code</h3>
+    <pre><code>function ListItems() {
+  const items = [
+    'HTML',
+    'CSS',
+    'JavaScript',
+    'React',
+    'Node.js'
+  ];
+
+  return (
+    &lt;div>
+      &lt;h2>Technology List&lt;/h2>
+      &lt;ul>
+        {items.map((item, index) => (
+          &lt;li key={index}>{item}&lt;/li>
+        ))}
+      &lt;/ul>
+    &lt;/div>
+  );
+}
+
+export default ListItems;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo list-demo">
+      <h2>Technology List</h2>
+      <ul>
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>React</li><li>Node.js</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <section>
+    <h2>6. Check List</h2>
+    <h3>Code</h3>
+    <pre><code>import { useState } from 'react';
+
+function Checklist() {
+  const options = [
+    'HTML',
+    'CSS',
+    'JavaScript',
+    'React',
+    'Node.js'
+  ];
+
+  const [selected, setSelected] = useState([]);
+
+  function handleChange(e) {
+    const { value, checked } = e.target;
+
+    setSelected((prev) =>
+      checked
+        ? [...prev, value]
+        : prev.filter((item) => item !== value)
+    );
+  }
+
+  return (
+    &lt;div>
+      &lt;h2>Technology Checklist&lt;/h2>
+      {options.map((option) => (
+        &lt;div key={option}>
+          &lt;label>
+            &lt;input
+              type="checkbox"
+              value={option}
+              checked={selected.includes(option)}
+              onChange={handleChange}
+            />
+            {option}
+          &lt;/label>
+        &lt;/div>
+      ))}
+      &lt;h3>Selected Options:&lt;/h3>
+      {selected.length > 0 ? (
+        &lt;ul>
+          {selected.map((item) => (
+            &lt;li key={item}>{item}&lt;/li>
+          ))}
+        &lt;/ul>
+      ) : (
+        &lt;p>No options selected.&lt;/p>
+      )}
+    &lt;/div>
+  );
+}
+
+export default Checklist;</code></pre>
+    <h3>Output</h3>
+    <div class="output demo checklist-demo">
+      <h2>Technology Checklist</h2>
+      <div class="option"><label><input type="checkbox" value="HTML" checked> HTML</label></div>
+      <div class="option"><label><input type="checkbox" value="CSS" checked> CSS</label></div>
+      <div class="option"><label><input type="checkbox" value="JavaScript" checked> JavaScript</label></div>
+      <div class="option"><label><input type="checkbox" value="React"> React</label></div>
+      <div class="option"><label><input type="checkbox" value="Node.js"> Node.js</label></div>
+      <h3>Selected Options:</h3>
+      <ul class="selected-list" id="selectedOptions">
+        <li>HTML</li><li>CSS</li><li>JavaScript</li>
+      </ul>
+      <p id="noOptions" hidden>No options selected.</p>
+    </div>
+  </section>
+
+  <script>
+    // Search Filter
+    const fruits = ['Apple', 'Banana', 'Orange', 'Mango', 'Grapes', 'Pineapple'];
+    const fruitSearch = document.getElementById('fruitSearch');
+    const fruitList = document.getElementById('fruitList');
+    const noFruitMessage = document.getElementById('noFruitMessage');
+    fruitSearch.addEventListener('input', () => {
+      const filtered = fruits.filter(item => item.toLowerCase().includes(fruitSearch.value.toLowerCase()));
+      fruitList.innerHTML = filtered.map(item => `<li>${item}</li>`).join('');
+      fruitList.hidden = filtered.length === 0;
+      noFruitMessage.hidden = filtered.length !== 0;
+    });
+
+    // Login form demo. Example values match the supplied screenshot; valid login is Bhuvan / bhuvan@gmail.com / 12345.
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const name = document.getElementById('loginName').value;
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const error = document.getElementById('loginError');
+      if (name === 'Bhuvan' && email === 'bhuvan@gmail.com' && password === '12345') {
+        document.getElementById('loginDemo').innerHTML = `<h2>Welcome, ${name}!</h2>`;
+      } else {
+        error.textContent = 'Invalid name, email, or password.';
+        error.hidden = false;
+      }
+    });
+
+    // Counter
+    let count = 3;
+    const countValue = document.getElementById('countValue');
+    document.getElementById('incrementBtn').addEventListener('click', () => countValue.textContent = ++count);
+    document.getElementById('decrementBtn').addEventListener('click', () => countValue.textContent = --count);
+    document.getElementById('resetBtn').addEventListener('click', () => { count = 0; countValue.textContent = count; });
+
+    // Image slider
+    const imageUrls = [
+      'https://picsum.photos/id/1015/600/300',
+      'https://picsum.photos/id/1016/600/300',
+      'https://picsum.photos/id/1018/600/300',
+      'https://picsum.photos/id/1020/600/300'
+    ];
+    let slideIndex = 0;
+    const sliderImage = document.getElementById('sliderImage');
+    const slideCounter = document.getElementById('slideCounter');
+    const dots = Array.from(document.querySelectorAll('#sliderDots .dot'));
+    function showSlide(index) {
+      slideIndex = (index + imageUrls.length) % imageUrls.length;
+      sliderImage.src = imageUrls[slideIndex];
+      sliderImage.alt = `Slide ${slideIndex + 1}`;
+      slideCounter.textContent = `Image ${slideIndex + 1} of ${imageUrls.length}`;
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
+    }
+    document.getElementById('previousSlide').addEventListener('click', () => showSlide(slideIndex - 1));
+    document.getElementById('nextSlide').addEventListener('click', () => showSlide(slideIndex + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+
+    // Checklist
+    const checklistInputs = Array.from(document.querySelectorAll('.checklist-demo input[type="checkbox"]'));
+    const selectedOptions = document.getElementById('selectedOptions');
+    const noOptions = document.getElementById('noOptions');
+    function updateSelectedOptions() {
+      const selected = checklistInputs.filter(input => input.checked).map(input => input.value);
+      selectedOptions.innerHTML = selected.map(item => `<li>${item}</li>`).join('');
+      selectedOptions.hidden = selected.length === 0;
+      noOptions.hidden = selected.length !== 0;
+    }
+    checklistInputs.forEach(input => input.addEventListener('change', updateSelectedOptions));
+  </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js Prelab Programs</title>
+  <style>
+    body {
+      max-width: 950px;
+      margin: 24px auto;
+      padding: 0 18px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin-top: 28px; }
+    h3 { font-size: 16px; margin: 16px 0 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid #ccc;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+    }
+    .output {
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #000;
+      padding: 14px;
+      margin-bottom: 28px;
+    }
+    .output pre {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+    hr { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+  </style>
+</head>
+<body>
+  <h1>Prelab Programs</h1>
+
+  <section>
+    <h2>1. Server Date and Time</h2>
+    <h3>Code</h3>
+    <pre><code>const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Current Date and Time: ' + new Date());
+});
+
+server.listen(3000, () => {
+    console.log('Server running at http://localhost:3000');
+});</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre id="dateOutput">Current Date and Time: Mon Oct 12 2026 19:47:31 GMT+0530 (India Standard Time)</pre>
+      <p><small>Example output from the provided program. The date and time will change each time the server is requested.</small></p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>2. Upper Case</h2>
+    <h3>Code</h3>
+    <pre><code>const fs = require('fs');
+
+fs.readFile('input.txt', 'utf8', (err, data) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    const upperData = data.toUpperCase();
+
+    fs.writeFile('output.txt', upperData, (err) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        console.log('Content written in uppercase successfully!');
+    });
+});</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Content written in uppercase successfully!
+
+THIS LINE CONTAINS THE TEXT IN LOWERCASE AND CONVERTED TO UPPERCASE</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>3. Callback Hell</h2>
+    <h3>Code</h3>
+    <pre><code>console.log("Callback Hell:");
+
+setTimeout(() => {
+    console.log("First task");
+
+    setTimeout(() => {
+        console.log("Second task");
+
+        setTimeout(() => {
+            console.log("Third task");
+
+            runTasks();
+        }, 1000);
+
+    }, 1000);
+}, 1000);
+
+
+function task(message) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(message);
+            resolve();
+        }, 1000);
+    });
+}
+
+async function runTasks() {
+    console.log("\\nUsing Async/Await:");
+
+    await task("First task");
+    await task("Second task");
+    await task("Third task");
+}</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Callback Hell:
+First task
+Second task
+Third task
+
+Using Async/Await:
+First task
+Second task
+Third task</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>4. Custom Event</h2>
+    <h3>Code</h3>
+    <pre><code>const EventEmitter = require('events');
+
+const eventEmitter = new EventEmitter();
+
+eventEmitter.on('greet', (name) => {
+    console.log('Hello, ' + name + '!');
+});
+
+eventEmitter.emit('greet', 'Bhuvan');</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Hello, Bhuvan!</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>5. Sync and Async File Reading</h2>
+    <h3>Code</h3>
+    <pre><code>const fs = require('fs');
+
+console.log('Synchronous File Reading:');
+
+try {
+    const data = fs.readFileSync('input.txt', 'utf8');
+    console.log('File content:');
+    console.log(data);
+    console.log('Synchronous reading completed.\\n');
+} catch (err) {
+    console.log(err.message);
+}
+
+console.log('Asynchronous File Reading:');
+
+fs.readFile('input.txt', 'utf8', (err, data) => {
+    if (err) {
+        console.log(err.message);
+        return;
+    }
+
+    console.log('File content:');
+    console.log(data);
+    console.log('Asynchronous reading completed.');
+});
+
+console.log('Reading started.');</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Synchronous File Reading:
+File content:
+this line contains the text in lowercase and converted to uppercase
+Synchronous reading completed.
+
+Asynchronous File Reading:
+Reading started.
+File content:
+this line contains the text in lowercase and converted to uppercase
+Asynchronous reading completed.</pre>
+    </div>
+  </section>
+</body>
+</html>

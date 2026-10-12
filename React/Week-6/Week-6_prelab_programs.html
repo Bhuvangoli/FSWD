@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Prelab Programs</title>
+  <style>
+    body {
+      margin: 24px auto;
+      padding: 0 18px;
+      max-width: 900px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin-top: 30px; }
+    h3 { font-size: 17px; margin-bottom: 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      padding: 14px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #000;
+      font: 14px/1.5 Consolas, "Courier New", monospace;
+    }
+    .output {
+      border: 1px solid #ccc;
+      padding: 18px;
+      margin-bottom: 28px;
+      background: #fff;
+      color: #000;
+    }
+    .student-card {
+      box-sizing: border-box;
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 20px;
+      width: 290px;
+      max-width: 100%;
+      background: #f0f8ff;
+      text-align: center;
+      color: #666;
+      font-size: 21px;
+      line-height: 1.55;
+    }
+    .student-card h3 {
+      color: #000;
+      font-size: 28px;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .student-card p { margin: 0; }
+    .buttons-output button {
+      font: 16px Arial, sans-serif;
+      padding: 2px 8px;
+      color: #000;
+    }
+    .website-output { text-align: center; }
+    .website-output h1 {
+      margin: 0;
+      font-size: clamp(42px, 8vw, 72px);
+      font-weight: 400;
+      letter-spacing: -2px;
+    }
+    .website-output p,
+    .website-output footer {
+      margin: 6px 0 0;
+      color: #666;
+      font-size: 22px;
+    }
+    hr { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+  </style>
+</head>
+<body>
+  <h1>Prelab Programs</h1>
+
+  <section>
+    <h2>1. Student Info</h2>
+    <h3>Code</h3>
+    <pre><code>function StudentCard() {
+  return (
+    &lt;div style={{
+      border: "2px solid black",
+      padding: "20px",
+      width: "250px",
+      borderRadius: "10px",
+      backgroundColor: "#f0f8ff"
+    }}>
+      &lt;h2>Student Details&lt;/h2>
+      &lt;p>&lt;b>Name:&lt;/b> Bhuvan&lt;/p>
+      &lt;p>&lt;b>Roll Number:&lt;/b> 1602-24-733-010&lt;/p>
+      &lt;p>&lt;b>Branch:&lt;/b> CSE&lt;/p>
+      &lt;p>&lt;b>Year:&lt;/b> 3rd Year&lt;/p>
+    &lt;/div>
+  );
+}
+
+export default StudentCard;</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <div class="student-card">
+        <h3>Student Details</h3>
+        <p><strong>Name:</strong> Bhuvan</p>
+        <p><strong>Roll Number:</strong> 1602-24-733-010</p>
+        <p><strong>Branch:</strong> CSE</p>
+        <p><strong>Year:</strong> 3rd Year</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>2. Reusable Buttons</h2>
+    <h3>Code</h3>
+    <pre><code>function Button() {
+  return &lt;button>Click Me&lt;/button>;
+}
+
+export default Button;</code></pre>
+    <h3>Output</h3>
+    <div class="output buttons-output">
+      <button type="button">Click Me</button><button type="button">Click Me</button><button type="button">Click Me</button>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>3. Webpage</h2>
+    <h3>Header — Code</h3>
+    <pre><code>function Header() {
+  return &lt;h1>My Website&lt;/h1>;
+}
+
+export default Header;</code></pre>
+
+    <h3>Content — Code</h3>
+    <pre><code>function Content() {
+  return &lt;p>Welcome to my website!&lt;/p>;
+}
+
+export default Content;</code></pre>
+
+    <h3>Footer — Code</h3>
+    <pre><code>function Footer() {
+  return &lt;footer>© 2026 My Website. All rights reserved.&lt;/footer>;
+}
+
+export default Footer;</code></pre>
+
+    <h3>Output</h3>
+    <div class="output website-output">
+      <h1>My Website</h1>
+      <p>Welcome to my website!</p>
+      <footer>© 2026 My Website. All rights reserved.</footer>
+    </div>
+  </section>
+</body>
+</html>

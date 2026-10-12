@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js Lab Programs</title>
+  <style>
+    body {
+      max-width: 950px;
+      margin: 24px auto;
+      padding: 0 18px;
+      background: #fff;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { font-size: 22px; margin-top: 28px; }
+    h3 { font-size: 16px; margin: 16px 0 8px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid #ccc;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+    }
+    .output {
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #000;
+      padding: 14px;
+      margin-bottom: 28px;
+    }
+    .output pre { border: 0; padding: 0; margin: 0; }
+    hr { border: 0; border-top: 1px solid #ddd; margin: 32px 0; }
+  </style>
+</head>
+<body>
+  <h1>Lab Programs</h1>
+
+  <section>
+    <h2>1. Read Data from HTML File</h2>
+    <h3>Code (server.js)</h3>
+    <pre><code>const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+    fs.readFile('index.html', 'utf8', (err, data) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Error reading HTML file');
+            return;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(data);
+    });
+});
+
+server.listen(3000, () => {
+    console.log('Server running at http://localhost:3000');
+});</code></pre>
+    <h3>Output (index.html served in browser)</h3>
+    <div class="output">
+      <h1>Welcome to Node.js</h1>
+      <p>This HTML file is served using the HTTP module.</p>
+    </div>
+    <h3>Sample index.html file</h3>
+    <pre><code>&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>Node.js HTML Server&lt;/title>
+&lt;/head>
+&lt;body>
+    &lt;h1>Welcome to Node.js&lt;/h1>
+    &lt;p>This HTML file is served using the HTTP module.&lt;/p>
+&lt;/body>
+&lt;/html></code></pre>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>2. Write and Append to File</h2>
+    <h3>Code</h3>
+    <pre><code>const fs = require('fs');
+
+fs.writeFile('data.txt', 'Hello Node.js!\n', (err) => {
+    if (err) throw err;
+
+    console.log('File written successfully.');
+
+    fs.appendFile('data.txt', 'Welcome to file handling.\n', (err) => {
+        if (err) throw err;
+
+        console.log('Data appended successfully.');
+    });
+});</code></pre>
+    <h3>Console Output</h3>
+    <div class="output">
+      <pre>File written successfully.
+Data appended successfully.</pre>
+    </div>
+    <h3>data.txt contents</h3>
+    <div class="output">
+      <pre>Hello Node.js!
+Welcome to file handling.</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>3. Arithmetic Operations</h2>
+    <h3>arithmetic.js — Code</h3>
+    <pre><code>function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) {
+        return 'Cannot divide by zero';
+    }
+    return a / b;
+}
+
+module.exports = { add, subtract, multiply, divide };</code></pre>
+    <h3>main.js — Code</h3>
+    <pre><code>const math = require('./arithmetic');
+
+console.log('Addition:', math.add(10, 5));
+console.log('Subtraction:', math.subtract(10, 5));
+console.log('Multiplication:', math.multiply(10, 5));
+console.log('Division:', math.divide(10, 5));</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Addition: 15
+Subtraction: 5
+Multiplication: 50
+Division: 2</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>4. Display File Contents</h2>
+    <h3>Code</h3>
+    <pre><code>const fs = require('fs');
+const filename = process.argv[2];
+
+if (!filename) {
+    console.log('Please provide a filename.');
+    process.exit(1);
+}
+
+fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) {
+        console.log('Error:', err.message);
+        return;
+    }
+
+    console.log('File content:');
+    console.log(data);
+});</code></pre>
+    <h3>Example command</h3>
+    <div class="output"><pre>node display.js data.txt</pre></div>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>File content:
+Hello Node.js!
+Welcome to file handling.</pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>5. Read JSON Content</h2>
+    <h3>Code</h3>
+    <pre><code>const fs = require('fs');
+
+fs.readFile('user.json', 'utf8', (err, data) => {
+    if (err) {
+        console.log('Error reading file:', err.message);
+        return;
+    }
+
+    try {
+        const users = JSON.parse(data);
+
+        users.forEach((user) => {
+            console.log('Name:', user.name);
+            console.log('Age:', user.age);
+            console.log('Email:', user.email);
+            console.log('------------------');
+        });
+    } catch (err) {
+        console.log('Invalid JSON:', err.message);
+    }
+});</code></pre>
+    <h3>user.json — Example input file</h3>
+    <pre><code>[
+  {
+    "name": "Rahul",
+    "age": 20,
+    "email": "rahul@example.com"
+  },
+  {
+    "name": "Priya",
+    "age": 21,
+    "email": "priya@example.com"
+  },
+  {
+    "name": "Amit",
+    "age": 22,
+    "email": "amit@example.com"
+  }
+]</code></pre>
+    <h3>Output</h3>
+    <div class="output">
+      <pre>Name: Rahul
+Age: 20
+Email: rahul@example.com
+------------------
+Name: Priya
+Age: 21
+Email: priya@example.com
+------------------
+Name: Amit
+Age: 22
+Email: amit@example.com
+------------------</pre>
+    </div>
+  </section>
+</body>
+</html>
