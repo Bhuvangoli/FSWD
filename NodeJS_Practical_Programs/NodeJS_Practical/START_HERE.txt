@@ -1,0 +1,42 @@
+NODE.JS PRACTICALS - START HERE
+
+You need:
+- Node.js (already installed)
+- VS Code or another editor
+- MongoDB Community Server running locally OR a MongoDB Atlas database
+- Postman (recommended for Question 3)
+
+QUESTION 1 (no database needed)
+1. Open the Question1_FileSystem folder in VS Code.
+2. Open Terminal > New Terminal.
+3. Run: node app.js
+
+QUESTION 2
+1. Make sure MongoDB is running.
+2. Open Question2_Mongoose in VS Code.
+3. In the terminal, run: npm install
+4. Check .env. The default local URI is:
+   mongodb://127.0.0.1:27017/employee_db
+5. Run: npm start
+
+QUESTION 3
+1. Make sure MongoDB is running.
+2. Open Question3_REST_API in VS Code.
+3. In the terminal, run: npm install
+4. Check .env. The default local URI is:
+   mongodb://127.0.0.1:27017/product_db
+5. Run: npm start
+6. Test in Postman using the endpoint examples in README.txt.
+
+If using MongoDB Atlas instead of local MongoDB:
+- Copy your Atlas connection string.
+- Replace the value of MONGODB_URI in the relevant .env file.
+- Replace <password> with your database user's password.
+- Ensure your IP address is allowed in Atlas Network Access.
+- Do not share your connection string or password publicly.
+
+Troubleshooting:
+- "ECONNREFUSED 127.0.0.1:27017": MongoDB server is not running; start MongoDB or use Atlas.
+- "Cannot find module ...": run npm install inside that question's folder.
+- Port 3000 in use: change PORT=3000 in Question3_REST_API/.env to another free port.
+- Invalid database URI: check the .env file and ensure the URI is correct.

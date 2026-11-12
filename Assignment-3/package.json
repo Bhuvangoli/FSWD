@@ -1,0 +1,16 @@
+{
+  "name": "assignment-3",
+  "version": "1.0.0",
+  "description": "Node.js and MongoDB practical programs",
+  "main": "q1.js",
+  "scripts": {
+    "q1": "node q1.js",
+    "q2": "node q2.js",
+    "q3": "node q3.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}

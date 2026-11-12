@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FSWD - Assignment-3</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 32px 46px 55px;
+  background: #fff; color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+header {
+  position: relative; min-height: 118px;
+  text-align: center; border-bottom: 1px solid #222;
+  margin-bottom: 28px; padding: 8px 0 18px;
+}
+header h1 { margin: 0; font-size: 25px; letter-spacing: 2px; }
+header h2 { margin: 3px 0 0; font-size: 21px; }
+.student {
+  position: absolute; top: 0; right: 0;
+  text-align: left; width: 225px; font-size: 14px;
+}
+.student p { margin: 5px 0 12px; }
+.line {
+   width: 125px;height: 17px;
+  vertical-align: bottom;
+}
+.intro { font-size: 14px; margin: 0 0 26px; }
+section { margin: 0 0 42px; }
+h2.section-title {
+  font-size: 21px; margin: 0 0 5px;
+  padding-bottom: 7px; border-bottom: 1px solid #777;
+}
+.subtitle { font-size: 14px; margin: 5px 0 17px; }
+h3 { font-size: 16px; margin: 22px 0 8px; }
+pre {
+  white-space: pre-wrap; overflow-wrap: anywhere;
+  background: #fff; color: #000;
+  border: 1px solid #999; border-radius: 2px;
+  padding: 13px 15px; margin: 8px 0 16px;
+  font: 12px/1.48 Consolas, "Courier New", monospace;
+  tab-size: 4;
+}
+.note {
+  border-left: 3px solid #555;
+  padding: 8px 12px; margin: 12px 0;
+  font-size: 13px;
+}
+footer {
+  border-top: 1px solid #777; text-align: center;
+  padding-top: 12px; font-size: 12px; margin-top: 30px;
+}
+@media (max-width: 700px) {
+  body { padding: 18px 14px 35px; }
+  header { padding-top: 90px; }
+  .student { left: 0; right: auto; width: 100%; }
+  pre { font-size: 11px; padding: 10px; }
+}
+@media print {
+  body { padding: 15mm; }
+  h2, h3 { break-after: avoid; }
+  pre { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="student">
+    <p><strong>Name:Bhuvan Sai G</strong> <span class="line"></span></p>
+    <p><strong>Roll number: 1602-24-733-010</strong> <span class="line"></span></p>
+  </div>
+  <h1>FSWD</h1>
+  <h2>Assignment-3</h2>
+</header>
+
+<section>
+  <h2 class="section-title">1. File System Module</h2>
+  <h3>Program Code</h3>
+  <pre><code>const fs = require(&quot;fs&quot;);
+const path = require(&quot;path&quot;);
+
+const filePath = path.join(__dirname, &quot;sample.txt&quot;);
+
+if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(
+        filePath,
+        &quot;Hello! This is a sample text file.\nNode.js File System Module.&quot;
+    );
+}
+
+console.log(&quot;\n--- Synchronous Reading ---&quot;);
+console.log(&quot;1. Before synchronous read&quot;);
+
+try {
+    const data = fs.readFileSync(filePath, &quot;utf8&quot;);
+    console.log(&quot;2. File Content:&quot;);
+    console.log(data);
+} catch (error) {
+    console.log(&quot;Error:&quot;, error.message);
+}
+
+console.log(&quot;3. After synchronous read&quot;);
+
+console.log(&quot;\n--- Asynchronous Reading ---&quot;);
+console.log(&quot;4. Before asynchronous read&quot;);
+
+fs.readFile(filePath, &quot;utf8&quot;, (error, data) =&gt; {
+    if (error) {
+        console.log(&quot;Error:&quot;, error.message);
+        return;
+    }
+
+    console.log(&quot;6. Asynchronous File Content:&quot;);
+    console.log(data);
+    console.log(&quot;7. Inside asynchronous callback&quot;);
+});
+
+console.log(&quot;5. Immediately after starting asynchronous read&quot;);
+console.log(&quot;Program continues without waiting for file reading.&quot;);</code></pre>
+  <h3>Output</h3>
+  <pre><code>--- Synchronous Reading ---
+1. Before synchronous read
+2. File Content:
+Hello! This is a sample text file.
+Node.js File System Module.
+3. After synchronous read
+
+--- Asynchronous Reading ---
+4. Before asynchronous read
+5. Immediately after starting asynchronous read
+Program continues without waiting for file reading.
+6. Asynchronous File Content:
+Hello! This is a sample text file.
+Node.js File System Module.
+7. Inside asynchronous callback</code></pre>
+</section>
+
+<section>
+  <h2 class="section-title">2. Mongoose Employee Schema</h2>
+  <h3>Program Code</h3>
+  <pre><code>require(&quot;dotenv&quot;).config();
+const mongoose = require(&quot;mongoose&quot;);
+
+const employeeSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 2,
+        maxlength: 50,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        match: /^\S+@\S+\.\S+$/
+    },
+    age: {
+        type: Number,
+        required: true,
+        min: 18,
+        max: 65
+    },
+    department: {
+        type: String,
+        required: true,
+        enum: [&quot;IT&quot;, &quot;HR&quot;, &quot;Finance&quot;, &quot;Sales&quot;, &quot;Marketing&quot;]
+    },
+    salary: {
+        type: Number,
+        required: true,
+        min: 0
+    }
+});
+
+const Employee = mongoose.model(&quot;Employee&quot;, employeeSchema);
+
+async function main() {
+    try {
+        // Connect to MongoDB Atlas
+        await mongoose.connect(process.env.EMPLOYEE_MONGODB_URI);
+        console.log(&quot;MongoDB Atlas Connected Successfully!&quot;);
+
+        await Employee.init();
+        await Employee.deleteMany({});
+
+        const employees = await Employee.insertMany([
+            {
+                name: &quot;Aarav Sharma&quot;,
+                email: &quot;aarav@example.com&quot;,
+                age: 25,
+                department: &quot;IT&quot;,
+                salary: 60000
+            },
+            {
+                name: &quot;Diya Patel&quot;,
+                email: &quot;diya@example.com&quot;,
+                age: 29,
+                department: &quot;HR&quot;,
+                salary: 45000
+            },
+            {
+                name: &quot;Kabir Rao&quot;,
+                email: &quot;kabir@example.com&quot;,
+                age: 32,
+                department: &quot;IT&quot;,
+                salary: 80000
+            },
+            {
+                name: &quot;Meera Nair&quot;,
+                email: &quot;meera@example.com&quot;,
+                age: 27,
+                department: &quot;Finance&quot;,
+                salary: 55000
+            },
+            {
+                name: &quot;Ishaan Verma&quot;,
+                email: &quot;ishaan@example.com&quot;,
+                age: 35,
+                department: &quot;Finance&quot;,
+                salary: 70000
+            }
+        ]);
+
+        console.log(&quot;\nInserted Five Employees Successfully!&quot;);
+
+        const salaryLimit = 50000;
+        const highSalaryEmployees = await Employee.find({
+            salary: { $gt: salaryLimit }
+        });
+
+        console.log(&quot;\nEmployees Earning More Than 50000:&quot;);
+        console.table(highSalaryEmployees.map(emp =&gt; ({
+            name: emp.name,
+            department: emp.department,
+            salary: emp.salary
+        })));
+
+        const page = 1;
+        const limit = 2;
+
+        const sortedEmployees = await Employee.find()
+            .sort({ salary: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        console.log(&quot;\nTop 2 Highest Paid Employees:&quot;);
+        console.table(sortedEmployees.map(emp =&gt; ({
+            name: emp.name,
+            salary: emp.salary
+        })));
+
+        const result = await Employee.aggregate([
+            {
+                $group: {
+                    _id: &quot;$department&quot;,
+                    averageSalary: { $avg: &quot;$salary&quot; },
+                    employeeCount: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    department: &quot;$_id&quot;,
+                    averageSalary: { $round: [&quot;$averageSalary&quot;, 2] },
+                    employeeCount: 1
+                }
+            }
+        ]);
+
+        console.log(&quot;\nDepartment-wise Average Salary:&quot;);
+        console.table(result);
+
+    } catch (error) {
+        console.log(&quot;Error:&quot;, error.message);
+    } finally {
+        await mongoose.disconnect();
+        console.log(&quot;\nMongoDB Connection Closed!&quot;);
+    }
+}
+
+main();</code></pre>
+  <h3>Output</h3>
+  <pre><code>◇ injected env (3) from .env
+MongoDB Atlas Connected Successfully!
+
+Inserted Five Employees Successfully!
+
+Employees Earning More Than 50000:
+┌─────────┬────────────────┬────────────┬────────┐
+│ (index) │ name           │ department │ salary │
+├─────────┼────────────────┼────────────┼────────┤
+│ 0       │ &#x27;Aarav Sharma&#x27; │ &#x27;IT&#x27;       │ 60000  │
+│ 1       │ &#x27;Kabir Rao&#x27;    │ &#x27;IT&#x27;       │ 80000  │
+│ 2       │ &#x27;Meera Nair&#x27;   │ &#x27;Finance&#x27;  │ 55000  │
+│ 3       │ &#x27;Ishaan Verma&#x27; │ &#x27;Finance&#x27;  │ 70000  │
+└─────────┴────────────────┴────────────┴────────┘
+
+Top 2 Highest Paid Employees:
+┌─────────┬────────────────┬────────┐
+│ (index) │ name           │ salary │
+├─────────┼────────────────┼────────┤
+│ 0       │ &#x27;Kabir Rao&#x27;    │ 80000  │
+│ 1       │ &#x27;Ishaan Verma&#x27; │ 70000  │
+└─────────┴────────────────┴────────┘
+
+Department-wise Average Salary:
+┌─────────┬───────────────┬────────────┬───────────────┐
+│ (index) │ employeeCount │ department │ averageSalary │
+├─────────┼───────────────┼────────────┼───────────────┤
+│ 0       │ 2             │ &#x27;Finance&#x27;  │ 62500         │
+│ 1       │ 1             │ &#x27;HR&#x27;       │ 45000         │
+│ 2       │ 2             │ &#x27;IT&#x27;       │ 70000         │
+└─────────┴───────────────┴────────────┴───────────────┘
+
+MongoDB Connection Closed!</code></pre>
+</section>
+
+<section>
+  <h2 class="section-title">3. REST API using Node.js, Express and MongoDB</h2>
+  <h3>Program Code</h3>
+  <pre><code>require(&quot;dotenv&quot;).config();
+const express = require(&quot;express&quot;);
+const mongoose = require(&quot;mongoose&quot;);
+
+const app = express();
+app.use(express.json());
+
+const productSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 2,
+        maxlength: 100,
+        trim: true
+    },
+    description: {
+        type: String,
+        default: &quot;&quot;
+    },
+    price: {
+        type: Number,
+        required: true,
+        min: 0.01
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: [&quot;Electronics&quot;, &quot;Books&quot;, &quot;Clothing&quot;, &quot;Home&quot;, &quot;Other&quot;]
+    },
+    stock: {
+        type: Number,
+        default: 0,
+        min: 0
+    }
+}, { timestamps: true });
+
+const Product = mongoose.model(&quot;Product&quot;, productSchema);
+
+const asyncHandler = (fn) =&gt; (req, res, next) =&gt;
+    Promise.resolve(fn(req, res, next)).catch(next);
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+    res.json({
+        message: &quot;Product API is running successfully!&quot;
+    });
+});
+
+app.get(&quot;/api/v1/products&quot;, asyncHandler(async (req, res) =&gt; {
+    const {
+        minPrice,
+        maxPrice,
+        sort = &quot;createdAt&quot;,
+        order = &quot;asc&quot;,
+        page = 1,
+        limit = 10
+    } = req.query;
+
+    const min = minPrice === undefined ? undefined : Number(minPrice);
+    const max = maxPrice === undefined ? undefined : Number(maxPrice);
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+
+    if (
+        (min !== undefined &amp;&amp; (!Number.isFinite(min) || min &lt; 0)) ||
+        (max !== undefined &amp;&amp; (!Number.isFinite(max) || max &lt; 0))
+    ) {
+        return res.status(400).json({
+            message: &quot;Invalid price filter&quot;
+        });
+    }
+
+    if (min !== undefined &amp;&amp; max !== undefined &amp;&amp; min &gt; max) {
+        return res.status(400).json({
+            message: &quot;Minimum price cannot exceed maximum price&quot;
+        });
+    }
+
+    if (
+        !Number.isInteger(pageNumber) ||
+        pageNumber &lt; 1 ||
+        !Number.isInteger(limitNumber) ||
+        limitNumber &lt; 1 ||
+        limitNumber &gt; 100
+    ) {
+        return res.status(400).json({
+            message: &quot;Invalid page or limit&quot;
+        });
+    }
+
+    const allowedSortFields = [&quot;name&quot;, &quot;price&quot;, &quot;createdAt&quot;];
+    if (!allowedSortFields.includes(sort)) {
+        return res.status(400).json({
+            message: &quot;Invalid sorting field&quot;
+        });
+    }
+
+    if (![&quot;asc&quot;, &quot;desc&quot;].includes(order)) {
+        return res.status(400).json({
+            message: &quot;Order must be asc or desc&quot;
+        });
+    }
+
+    const filter = {};
+    if (min !== undefined || max !== undefined) {
+        filter.price = {};
+        if (min !== undefined) filter.price.$gte = min;
+        if (max !== undefined) filter.price.$lte = max;
+    }
+
+    const sortOrder = order === &quot;asc&quot; ? 1 : -1;
+
+    const [products, total] = await Promise.all([
+        Product.find(filter)
+            .sort({ [sort]: sortOrder })
+            .skip((pageNumber - 1) * limitNumber)
+            .limit(limitNumber),
+        Product.countDocuments(filter)
+    ]);
+
+    res.json({
+        page: pageNumber,
+        limit: limitNumber,
+        total: total,
+        totalPages: Math.ceil(total / limitNumber),
+        products: products
+    });
+}));
+
+app.get(&quot;/api/v1/products/:id&quot;, asyncHandler(async (req, res) =&gt; {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({
+            message: &quot;Invalid product ID&quot;
+        });
+    }
+
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).json({
+            message: &quot;Product not found&quot;
+        });
+    }
+
+    res.json(product);
+}));
+
+app.post(&quot;/api/v1/products&quot;, asyncHandler(async (req, res) =&gt; {
+    const product = await Product.create(req.body);
+
+    res.status(201).json({
+        message: &quot;Product added successfully&quot;,
+        product: product
+    });
+}));
+
+app.put(&quot;/api/v1/products/:id&quot;, asyncHandler(async (req, res) =&gt; {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({
+            message: &quot;Invalid product ID&quot;
+        });
+    }
+
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    if (!product) {
+        return res.status(404).json({
+            message: &quot;Product not found&quot;
+        });
+    }
+
+    res.json({
+        message: &quot;Product updated successfully&quot;,
+        product: product
+    });
+}));
+
+app.delete(&quot;/api/v1/products/:id&quot;, asyncHandler(async (req, res) =&gt; {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({
+            message: &quot;Invalid product ID&quot;
+        });
+    }
+
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) {
+        return res.status(404).json({
+            message: &quot;Product not found&quot;
+        });
+    }
+
+    res.json({
+        message: &quot;Product deleted successfully&quot;,
+        product: product
+    });
+}));
+
+app.use((req, res) =&gt; {
+    res.status(404).json({
+        message: &quot;Requested route not found&quot;
+    });
+});
+
+app.use((err, req, res, next) =&gt; {
+    console.error(err);
+
+    if (err.name === &quot;ValidationError&quot;) {
+        return res.status(400).json({
+            message: &quot;Validation failed&quot;,
+            errors: Object.values(err.errors).map(
+                error =&gt; error.message
+            )
+        });
+    }
+
+    if (err.name === &quot;CastError&quot;) {
+        return res.status(400).json({
+            message: &quot;Invalid value supplied&quot;
+        });
+    }
+
+    if (err.code === 11000) {
+        return res.status(409).json({
+            message: &quot;Duplicate record&quot;
+        });
+    }
+
+    if (err instanceof SyntaxError &amp;&amp; err.status === 400 &amp;&amp; &quot;body&quot; in err) {
+        return res.status(400).json({
+            message: &quot;Invalid JSON request body&quot;
+        });
+    }
+
+    res.status(500).json({
+        message: &quot;Internal Server Error&quot;
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+
+async function startServer() {
+    try {
+        await mongoose.connect(process.env.PRODUCT_MONGODB_URI);
+        console.log(&quot;MongoDB Atlas Connected Successfully!&quot;);
+
+        app.listen(PORT, () =&gt; {
+            console.log(`Server running at http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.log(&quot;Server Error:&quot;, error.message);
+        process.exit(1);
+    }
+}
+
+startServer();</code></pre>
+  <h3>Outputs for API testing</h3>
+  
+<h3>Server startup</h3>
+<pre><code>Command: npm run q3\n\nMongoDB Atlas Connected Successfully!\nServer running at http://localhost:3000</code></pre>
+<h3>GET / – Check server</h3>
+<p><b>Request:</b> GET http://localhost:3000/</p>
+<pre><code>HTTP 200 OK\n{\n  &quot;message&quot;: &quot;Product API is running successfully!&quot;\n}</code></pre>
+<h3>POST /api/v1/products – Add a product</h3>
+<p><b>Request:</b> POST http://localhost:3000/api/v1/products (Body → raw → JSON)</p>
+<pre><code>{
+  &quot;name&quot;: &quot;Wireless Mouse&quot;,
+  &quot;description&quot;: &quot;Wireless USB Mouse&quot;,
+  &quot;price&quot;: 799,
+  &quot;category&quot;: &quot;Electronics&quot;,
+  &quot;stock&quot;: 25
+}</code></pre>
+<pre><code>HTTP 201 Created
+{
+  &quot;message&quot;: &quot;Product added successfully&quot;,
+  &quot;product&quot;: {
+    &quot;_id&quot;: &quot;GENERATED_PRODUCT_ID&quot;,
+    &quot;name&quot;: &quot;Wireless Mouse&quot;,
+    &quot;description&quot;: &quot;Wireless USB Mouse&quot;,
+    &quot;price&quot;: 799,
+    &quot;category&quot;: &quot;Electronics&quot;,
+    &quot;stock&quot;: 25,
+    &quot;createdAt&quot;: &quot;GENERATED_TIMESTAMP&quot;,
+    &quot;updatedAt&quot;: &quot;GENERATED_TIMESTAMP&quot;,
+    &quot;__v&quot;: 0
+  }
+}</code></pre>
+<h3>GET /api/v1/products – Retrieve all products</h3>
+<p><b>Request:</b> GET http://localhost:3000/api/v1/products</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;page&quot;: 1,
+  &quot;limit&quot;: 10,
+  &quot;total&quot;: 1,
+  &quot;totalPages&quot;: 1,
+  &quot;products&quot;: [
+    {
+      &quot;_id&quot;: &quot;GENERATED_PRODUCT_ID&quot;,
+      &quot;name&quot;: &quot;Wireless Mouse&quot;,
+      &quot;description&quot;: &quot;Wireless USB Mouse&quot;,
+      &quot;price&quot;: 799,
+      &quot;category&quot;: &quot;Electronics&quot;,
+      &quot;stock&quot;: 25
+    }
+  ]
+}</code></pre>
+<h3>GET /api/v1/products/:id – Retrieve one product</h3>
+<p><b>Request:</b> GET http://localhost:3000/api/v1/products/GENERATED_PRODUCT_ID</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;_id&quot;: &quot;GENERATED_PRODUCT_ID&quot;,
+  &quot;name&quot;: &quot;Wireless Mouse&quot;,
+  &quot;description&quot;: &quot;Wireless USB Mouse&quot;,
+  &quot;price&quot;: 799,
+  &quot;category&quot;: &quot;Electronics&quot;,
+  &quot;stock&quot;: 25
+}</code></pre>
+<h3>GET – Filter by minimum and maximum price</h3>
+<p><b>Request:</b> GET http://localhost:3000/api/v1/products?minPrice=500&amp;maxPrice=1000</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;page&quot;: 1,
+  &quot;limit&quot;: 10,
+  &quot;total&quot;: 1,
+  &quot;totalPages&quot;: 1,
+  &quot;products&quot;: [
+    {
+      &quot;name&quot;: &quot;Wireless Mouse&quot;,
+      &quot;price&quot;: 799,
+      &quot;category&quot;: &quot;Electronics&quot;
+    }
+  ]
+}</code></pre>
+<h3>GET – Sort by price (ascending)</h3>
+<p><b>Request:</b> GET http://localhost:3000/api/v1/products?sort=price&amp;order=asc</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;page&quot;: 1,
+  &quot;limit&quot;: 10,
+  &quot;total&quot;: 1,
+  &quot;totalPages&quot;: 1,
+  &quot;products&quot;: [
+    {
+      &quot;name&quot;: &quot;Wireless Mouse&quot;,
+      &quot;price&quot;: 799
+    }
+  ]
+}</code></pre>
+<h3>GET – Pagination</h3>
+<p><b>Request:</b> GET http://localhost:3000/api/v1/products?page=1&amp;limit=5</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;page&quot;: 1,
+  &quot;limit&quot;: 5,
+  &quot;total&quot;: 1,
+  &quot;totalPages&quot;: 1,
+  &quot;products&quot;: [
+    {
+      &quot;name&quot;: &quot;Wireless Mouse&quot;,
+      &quot;price&quot;: 799
+    }
+  ]
+}</code></pre>
+<h3>PUT /api/v1/products/:id – Update a product</h3>
+<p><b>Request:</b> PUT http://localhost:3000/api/v1/products/GENERATED_PRODUCT_ID (Body → raw → JSON)</p>
+<pre><code>{
+  &quot;name&quot;: &quot;Gaming Mouse&quot;,
+  &quot;description&quot;: &quot;High Performance Gaming Mouse&quot;,
+  &quot;price&quot;: 1299,
+  &quot;category&quot;: &quot;Electronics&quot;,
+  &quot;stock&quot;: 20
+}</code></pre>
+<pre><code>HTTP 200 OK
+{
+  &quot;message&quot;: &quot;Product updated successfully&quot;,
+  &quot;product&quot;: {
+    &quot;_id&quot;: &quot;GENERATED_PRODUCT_ID&quot;,
+    &quot;name&quot;: &quot;Gaming Mouse&quot;,
+    &quot;description&quot;: &quot;High Performance Gaming Mouse&quot;,
+    &quot;price&quot;: 1299,
+    &quot;category&quot;: &quot;Electronics&quot;,
+    &quot;stock&quot;: 20
+  }
+}</code></pre>
+<h3>DELETE /api/v1/products/:id – Delete a product</h3>
+<p><b>Request:</b> DELETE http://localhost:3000/api/v1/products/GENERATED_PRODUCT_ID</p>
+<pre><code>HTTP 200 OK
+{
+  &quot;message&quot;: &quot;Product deleted successfully&quot;,
+  &quot;product&quot;: {
+    &quot;_id&quot;: &quot;GENERATED_PRODUCT_ID&quot;,
+    &quot;name&quot;: &quot;Gaming Mouse&quot;,
+    &quot;price&quot;: 1299,
+    &quot;category&quot;: &quot;Electronics&quot;,
+    &quot;stock&quot;: 20
+  }
+}</code></pre>
+<h3>Validation and error responses</h3>
+<pre><code>Invalid product ID:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Invalid product ID&quot; }
+
+Product not found:
+HTTP 404 Not Found
+{ &quot;message&quot;: &quot;Product not found&quot; }
+
+Invalid price filter:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Invalid price filter&quot; }
+
+Minimum price greater than maximum:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Minimum price cannot exceed maximum price&quot; }
+
+Invalid page or limit:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Invalid page or limit&quot; }
+
+Invalid sorting field:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Invalid sorting field&quot; }
+
+Invalid sort order:
+HTTP 400 Bad Request
+{ &quot;message&quot;: &quot;Order must be asc or desc&quot; }
+
+Schema validation failure:
+HTTP 400 Bad Request
+{
+  &quot;message&quot;: &quot;Validation failed&quot;,
+  &quot;errors&quot;: [&quot;Mongoose validation message&quot;]
+}
+
+Unknown route:
+HTTP 404 Not Found
+{ &quot;message&quot;: &quot;Requested route not found&quot; }
+
+Duplicate record:
+HTTP 409 Conflict
+{ &quot;message&quot;: &quot;Duplicate record&quot; }
+
+Unexpected server error:
+HTTP 500 Internal Server Error
+{ &quot;message&quot;: &quot;Internal Server Error&quot; }</code></pre>
+</section>
+
+</body>
+</html>
