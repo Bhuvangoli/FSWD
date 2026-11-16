@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 Prelab Programs</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            margin: 30px;
+        }
+        h1 {
+            border-bottom: 2px solid #000000;
+            padding-bottom: 5px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        h3 {
+            margin-bottom: 5px;
+        }
+        pre {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 12px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #000000;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Week 9 Prelab Programs</h1>
+
+    <!-- Program 1 -->
+    <h2>1. Math Module</h2>
+    <h3>Code:</h3>
+    <p><strong>Math.js</strong></p>
+    <pre><code>function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) {
+        return "Cannot divide by zero";
+    }
+    return a / b;
+}
+
+module.exports = {
+    add,
+    subtract,
+    multiply,
+    divide
+};</code></pre>
+
+    <p><strong>Main.js</strong></p>
+    <pre><code>const math = require('./math.js');
+
+console.log("Addition:", math.add(10, 5));
+console.log("Subtraction:", math.subtract(10, 5));
+console.log("Multiplication:", math.multiply(10, 5));
+console.log("Division:", math.divide(10, 5));</code></pre>
+
+    <h3>Output:</h3>
+    <pre><code>Addition: 15
+Subtraction: 5
+Multiplication: 50
+Division: 2</code></pre>
+
+    <hr>
+
+    <!-- Program 2 -->
+    <h2>2. Read a text file and handle errors</h2>
+    <h3>Code:</h3>
+    <pre><code>const fs = require('fs');
+
+const filename = process.argv[2];
+
+if (!filename) {
+    console.log("Please provide a filename.");
+    process.exit(1);
+}
+
+fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) {
+        console.log("Error: File does not exist or cannot be read.");
+        return;
+    }
+
+    console.log("File Content:");
+    console.log(data);
+});</code></pre>
+
+    <h3>Output:</h3>
+    <pre><code>File Content:
+Welcome to Node.js!
+This is a sample text file.
+File handling using Node.js.</code></pre>
+
+    <hr>
+
+    <!-- Program 3 -->
+    <h2>3. Read JSON</h2>
+    <h3>Code:</h3>
+    <pre><code>const fs = require('fs');
+fs.readFile('users.json', 'utf8', (err, data) => {
+
+    if (err) {
+        console.log("Error reading JSON file:", err.message);
+        return;
+    }
+
+    try {
+        const users = JSON.parse(data);
+
+        users.forEach((user) => {
+            console.log("Name:", user.name);
+            console.log("Age:", user.age);
+            console.log("Email:", user.email);
+            console.log("-------------------");
+        });
+
+    } catch (error) {
+        console.log("Invalid JSON format.");
+    }
+});</code></pre>
+
+    <h3>Output:</h3>
+    <pre><code>Name: John
+Age: 22
+Email: john@gmail.com
+-------------------
+Name: Alice
+Age: 25
+Email: alice@gmail.com
+-------------------
+Name: David
+Age: 21
+Email: david@gmail.com
+-------------------</code></pre>
+
+    <hr>
+
+    <!-- Program 4 -->
+    <h2>4. Simple REST API</h2>
+    <h3>Code:</h3>
+    <pre><code>const express = require('express');
+
+const app = express();
+
+app.use(express.json());
+
+let users = [
+    { id: 1, name: "John", age: 22 },
+    { id: 2, name: "Alice", age: 25 },
+    { id: 3, name: "David", age: 21 }
+];
+
+app.get('/users', (req, res) => {
+    res.json(users);
+});
+
+app.post('/users', (req, res) => {
+    const newUser = {
+        id: users.length > 0
+            ? Math.max(...users.map(u => u.id)) + 1
+            : 1,
+        name: req.body.name,
+        age: req.body.age
+    };
+
+    users.push(newUser);
+
+    res.status(201).json({
+        message: "User added successfully",
+        user: newUser
+    });
+});
+
+app.delete('/users/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const userExists = users.some(user => user.id === id);
+
+    if (!userExists) {
+        return res.status(404).json({
+            message: "User not found"
+        });
+    }
+
+    users = users.filter(user => user.id !== id);
+
+    res.json({
+        message: "User deleted successfully"
+    });
+});
+
+app.listen(3000, () => {
+    console.log("Server running at http://localhost:3000");
+});</code></pre>
+
+    <h3>Output:</h3>
+    <pre><code>Server running at http://localhost:3000</code></pre>
+
+</body>
+</html>
