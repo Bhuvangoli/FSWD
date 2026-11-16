@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Lab Programs</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            line-height: 1.0;
+            margin: 30px;
+        }
+        h1 {
+            border-bottom: 2px solid #000000;
+            padding-bottom: 5px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        h3 {
+            margin-bottom: 5px;
+        }
+        pre {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 12px;
+            font-family: "Courier New", Courier, monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Week 10 Lab Programs</h1>
+
+    <!-- Program 1 -->
+    <h2>1. RESTful Web Services</h2>
+    <h3>Code:</h3>
+    <pre><code>const express = require('express');
+
+const app = express();
+
+const PORT = 3000;
+
+const students = [
+    {
+        id: 1,
+        name: "Arun",
+        age: 20,
+        department: "Computer Science",
+        email: "arun@gmail.com"
+    },
+    {
+        id: 2,
+        name: "Priya",
+        age: 21,
+        department: "Information Technology",
+        email: "priya@gmail.com"
+    },
+    {
+        id: 3,
+        name: "Rahul",
+        age: 22,
+        department: "Electronics",
+        email: "rahul@gmail.com"
+    }
+];
+
+app.get('/students', (req, res) => {
+    res.json(students);
+});
+
+app.get('/students/:id', (req, res) => {
+    const student = students.find(
+        s => s.id === parseInt(req.params.id)
+    );
+
+    if (student) {
+        res.json(student);
+    } else {
+        res.status(404).json({
+            message: "Student not found"
+        });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});</code></pre>
+
+    <h3>Output:</h3>
+    <pre><code>[
+  {
+    "id": 1,
+    "name": "Arun",
+    "age": 20,
+    "department": "Computer Science",
+    "email": "arun@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Priya",
+    "age": 21,
+    "department": "Information Technology",
+    "email": "priya@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Rahul",
+    "age": 22,
+    "department": "Electronics",
+    "email": "rahul@gmail.com"
+  }
+]</code></pre>
+
+</body>
+</html>
